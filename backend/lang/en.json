@@ -1,0 +1,15 @@
+{
+    "Unsupported language.": "Unsupported language.",
+    "Unauthorized Client.": "Unauthorized Client.",
+    "You don't have access to this company.": "You don't have access to this company.",
+    "Invalid signature.": "Invalid signature.",
+    "Invalid Auth Credentials.": "Invalid Auth Credentials.",
+    "Invalid Old Password.": "Current password is incorrect.",
+    "OTP Verification Failed.": "OTP Verification Failed.",
+    "Unauthorized Access: You do not have permission to access this resource.": "Unauthorized Access: You do not have permission to access this resource.",
+    "There is no pending change request for this company.": "There is no pending change request for this company.",
+    "This email is already subscribed to our newsletter.": "This email is already subscribed to our newsletter.",
+    "Maximum number of 10 certificates reached. Please remove an existing certificate to add a new one.": "Maximum number of 10 certificates reached. Please remove an existing certificate to add a new one.",
+    "Company representatives cannot send contact requests to their own company.": "Company representatives cannot send contact requests to their own company.",
+    "You should complete the company profile registration in order to have access to this page": "You should complete the company profile registration in order to have access to this page."
+}

@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "Running Pint ..."
+#./vendor/bin/pint
+[ -f sail ] && bash sail pint || bash vendor/bin/sail pint
+
+# Check if Pint made any changes
+if ! git diff --exit-code > /dev/null; then
+  echo "Pint has made changes to your code. Please review and commit again."
+  exit 1
+fi
+
+exit 0
+
+

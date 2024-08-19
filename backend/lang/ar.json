@@ -1,0 +1,16 @@
+{
+    "Unsupported language.": "اللغه غير متاحة.",
+    "Unauthorized Client.": "عميل غير مصرح.",
+    "You don't have access to this company.": "ليس لديك حق الوصول إلى هذه الشركة.",
+    "Invalid signature.": "توقيع غير صالح.",
+    "Invalid Auth Credentials.": "بيانات اعتماد المصادقة غير صالحة.",
+    "Invalid Old Password.": "كلمة المرور الحالية غير صحيحة.",
+    "OTP_verification_failed": "فشل التحقق من OTP.",
+    "Unauthorized Access: You do not have permission to access this resource.": "الوصول غير المصرح به: ليس لديك إذن للوصول إلى هذا المورد.",
+    "There is no pending change request for this company.": "ليس هناك طلب تعديل بيانات يحتاج الموافقه لهذه الشركة.",
+    "Maximum number of 10 certificates reached. Please remove an existing certificate to add a new one.": "تم الوصول إلى الحد الأقصى لعدد 10 شهادات. يرجى إزالة شهادة موجودة لإضافة شهادة جديدة.",
+    "This email is already subscribed to our newsletter.": "هذا البريد الإلكتروني مشترك بالفعل في نشرتنا الإخبارية.",
+    "Company representatives cannot send contact requests to their own company.": "لا يمكن لممثلي الشركات التواصل مع نفس شركتهم عبر طلبات التواصل.",
+    "Company representatives cannot mark their own messages as read": "لا يمكن لممثلي الشركة وضع علامة مقروءة على رسائلهم الخاصة",
+    "You should complete the company profile registration in order to have access to this page": "يجب عليك استكمال بيانات الشركة لتتمكن من الوصول إلى هذه الصفحة."
+}

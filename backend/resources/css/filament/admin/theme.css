@@ -1,0 +1,50 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+.bg-dashboard-yellow {
+    background: linear-gradient(135deg, #f0fff4, #c6f6d5) !important;
+}
+
+.bg-dashboard-green {
+    background: linear-gradient(135deg, #fffff0, #fefcbf);
+}
+
+.bg-dashboard-blue {
+    background: linear-gradient(135deg, #fff5f7, #fed7e2);
+}
+
+.bg-dashboard-purple {
+    background: linear-gradient(135deg, #ebf8ff, #c3dafe);
+}
+
+
+.stats-card {
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    /*background: linear-gradient(135deg, #e2e8f0, #cbd5e1);*/
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), /* Shadow for depth */
+    0 10px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+    position: relative;
+    z-index: 1;
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.05)); /* Inner gradient */
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.stats-card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), /* Enhanced shadow for hover */
+    0 16px 24px rgba(0, 0, 0, 0.2);
+}

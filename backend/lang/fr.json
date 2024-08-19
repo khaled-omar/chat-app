@@ -1,0 +1,16 @@
+{
+    "Unsupported language.": "Langue non prise en charge.",
+    "Unauthorized Client.": "Client non autorisé.",
+    "You don't have access to this company.": "Vous n'avez pas accès à cette entreprise.",
+    "Invalid signature.": "Signature invalide.",
+    "Invalid Auth Credentials.": "Identifiants d'authentification invalides.",
+    "Invalid Old Password.": "La mot de passe actuel est incorrect.",
+    "OTP Verification Failed.": "Échec de la vérification OTP.",
+    "Unauthorized Access: You do not have permission to access this resource.": "Accès non autorisé : vous n'êtes pas autorisé à accéder à cette ressource.",
+    "There is no pending change request for this company.": "il n'y a pas de requête de modification en attente pour cette entreprise.",
+    "Company representatives cannot send contact requests to their own company.": "Les dirigeants de l'entreprise ne peuvent pas envoyer de demandes de contact aux propres.",
+    "Company representatives cannot mark their own messages as read": "Les représentants de l'entreprise ne peuvent pas marquer leurs propres messages comme lus",
+    "Maximum number of 10 certificates reached. Please remove an existing certificate to add a new one.": "Nombre maximum de 10 certificats atteint. Veuillez supprimer un certificat existant pour en ajouter un nouveau.",
+    "This email is already subscribed to our newsletter.": "Cet email est déjà abonné à notre newsletter.",
+    "You should complete the company profile registration in order to have access to this page": "Vous devez terminer la création du profil de l'entreprise pour avoir accès à cette page"
+}
