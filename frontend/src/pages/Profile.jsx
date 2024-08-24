@@ -1,11 +1,36 @@
-import { Box, Typography } from '@mui/material'
+import {BottomNavigation, BottomNavigationAction, Box, Typography} from '@mui/material'
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
+import * as React from 'react';
+
 
 function Profile() {
-  return (
-    <Box component='section' sx={{ my: 5, textAlign: 'center' }}>
-      <Typography component="h1" variant="h4" sx={{ color:'#666' }}>You are now Logged in</Typography>
-    </Box>
-  )
+    return (
+
+        <SimpleBottomNavigation sx={{}}/>
+    )
 }
 
 export default Profile
+
+function SimpleBottomNavigation() {
+    const [value, setValue] = React.useState(0);
+
+    return (
+        <Box sx={{width: 500}}>
+            <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                    setValue(newValue);
+                }}
+            >
+                <BottomNavigationAction label="Recents" icon={<RestoreIcon/>}/>
+                <BottomNavigationAction label="Favorites" icon={<FavoriteIcon/>}/>
+                <BottomNavigationAction label="Nearby" icon={<LocationOnIcon/>}/>
+            </BottomNavigation>
+        </Box>
+    );
+}

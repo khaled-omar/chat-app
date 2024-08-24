@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            //CountryLangSeeder::class,
             PassportClientSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

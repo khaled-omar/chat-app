@@ -1,4 +1,3 @@
-import React from 'react'
 import {
     Avatar,
     Box,
@@ -8,24 +7,13 @@ import {
     Typography
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {forgetPasswordSchema} from "../validations/schema";
-import UserService from "../services/UserService";
 import {Link as RouterLink} from "react-router-dom";
+import useForgetPasswordHooks from "./ForgetPassword.hooks.js";
 
 
 function ForgetPassword() {
-    const {
-        register,
-        formState: {errors, isSubmitting},
-        handleSubmit
-    } = useForm({resolver: yupResolver(forgetPasswordSchema)})
+    const {register, errors, isSubmitting, handleSubmit, onSubmit} = useForgetPasswordHooks()
 
-    const onSubmit = async (data) => {
-        data['g-recaptcha-response'] = 'abcd';
-        await UserService.forgetPassword(data)
-    }
     return (<Container maxWidth="sm">
         <Box
             sx={{
@@ -60,12 +48,12 @@ function ForgetPassword() {
             </Box>
             <Grid container sx={{mt: 2}}>
                 <Grid item xs>
-                    <Link component={RouterLink} to="/login" variant="body2">
+                    <Link component={RouterLink} to={"/login"} variant="body2">
                         {'Already have an account? Sign In'}
                     </Link>
                 </Grid>
                 <Grid item>
-                    <Link component={RouterLink} to="/register" variant="body2">
+                    <Link component={RouterLink} to={"/register"} variant="body2">
                         {'Don\'t have an account? Sign Up'}
                     </Link>
                 </Grid>

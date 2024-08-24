@@ -3,14 +3,16 @@ import theme from '../theme'
 import {Slide, ToastContainer} from 'material-react-toastify'
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {CookiesProvider} from "react-cookie";
 
 
 const queryClient = new QueryClient()
 
-function Layout({ children }) {
+function Layout({children}) {
     return (
         <ThemeProvider theme={theme}>
-            <QueryClientProvider client={queryClient}>
+            <CookiesProvider>
+                <QueryClientProvider client={queryClient}>
                     <Container component="main">
                         <CssBaseline/>
                         {children}
@@ -28,8 +30,8 @@ function Layout({ children }) {
                             transition={Slide}
                         />
                     </Container>
-
-            </QueryClientProvider>
+                </QueryClientProvider>
+            </CookiesProvider>
         </ThemeProvider>
     )
 }

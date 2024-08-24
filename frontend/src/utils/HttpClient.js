@@ -1,49 +1,46 @@
-import axios from 'axios'
+import axios from 'axios';
+import {toast} from "material-react-toastify";
+import cookies from "./Cookies.js";
+
 
 const httpConfig = {
-  baseURL: import.meta.env.VITE_BASE_API_URL,
-  timeout: 10000,
-  paramsSerializer: {
-    indexes: true, // use brackets with indexes
-  },
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept-Language': 'en',
-    'client-id': import.meta.env.VITE_CLIENT_ID,
-    'client-secret': import.meta.env.VITE_CLIENT_SECRET,
-    'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-  },
-}
+    baseURL: import.meta.env.VITE_BASE_API_URL,
+    timeout: 10000,
+    paramsSerializer: {
+        indexes: true, // use brackets with indexes
+    },
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': 'en',
+        'client-id': import.meta.env.VITE_CLIENT_ID,
+        'client-secret': import.meta.env.VITE_CLIENT_SECRET,
+    },
+};
 
-class HttpClient {
-  static async get(url, config) {
-    return await axios.get(url, { ...httpConfig, ...config })
-  }
+const HttpClient = axios.create(httpConfig);
 
-  static async post(url, data, config) {
-    return await axios.post(url, data, { ...httpConfig, ...config })
-  }
+HttpClient.interceptors.request.use(
+    (config) => {
+        const token = cookies.get('access_token');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        // Handle request error
+        return Promise.reject(error);
+    }
+);
 
-  static async delete(url, config) {
-    return await axios.delete(url, { ...httpConfig, ...config })
-  }
+HttpClient.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response.data?.status.code === 422) {
+            toast.error(error.response.data?.status?.message ?? error.response.data?.status?.errors)
+        }
+        return Promise.reject(error);
+    }
+);
 
-  static async put(url, data, config) {
-    return await axios.put(url, data, { ...httpConfig, ...config })
-  }
-
-  static async patch(url, data, config) {
-    return await axios.patch(url, data, { ...httpConfig, ...config })
-  }
-
-  static async request(url, method, data) {
-    return await axios.request({
-      method: method,
-      url: url,
-      data: data,
-      ...httpConfig,
-    })
-  }
-}
-
-export default HttpClient
+export default HttpClient;

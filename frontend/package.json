@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.0.14",
     "@hookform/resolvers": "^3.9.0",
     "@mui/icons-material": "^5.16.7",
@@ -19,10 +21,12 @@
     "material-react-toastify": "^10.0.5",
     "mui-one-time-password-input": "^2.0.3",
     "react": "^18.3.1",
+    "react-cookie": "^7.2.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
     "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.26.1",
+    "universal-cookie": "^7.2.0",
     "yup": "^1.4.0",
     "zustand": "^4.5.5"
   },

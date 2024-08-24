@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\MessageController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\OTPController;
 use App\Http\Controllers\Api\V1\ProfileController;
+use App\Http\Controllers\Api\V1\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->name('api.')->group(function () {
@@ -46,11 +47,11 @@ Route::prefix('v1')->name('api.')->group(function () {
             Route::patch('users/{user}/contact-requests/{contact_request}/mark-as-read', [ContactRequestController::class, 'markAsRead'])->name('contact-requests.mark-as-read')->middleware('authorize:contact-request');
             Route::apiResource('users/{user}/contact-requests/{contact_request}/messages', MessageController::class)->only(['index', 'store'])->middleware('authorize:contact-request');
         });
-
     });
 
     // Public routes start here
     Route::post('otp', [OTPController::class, 'send']);
     Route::get('boot', [BootController::class, 'index'])->name('boot');
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
     Route::apiResource('countries', CountryController::class)->only(['index', 'show']);
 });

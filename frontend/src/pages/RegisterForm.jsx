@@ -1,117 +1,45 @@
-import React, {useEffect, useState} from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import {useForm} from 'react-hook-form'
-import * as yup from 'yup'
-import {yupResolver} from '@hookform/resolvers/yup'
-import {toast} from 'material-react-toastify'
 import SendToMobileIcon from '@mui/icons-material/SendToMobile'
-
+import AlertDialogSlide from '../components/AlertDialogSlide'
+import LoadingSpinner from '../components/LoadingSpinner'
+import OtpFormDialog from '../components/OtpFormDialog'
+import {Link as RouterLink} from "react-router-dom";
 import {
     Avatar,
     Box,
     Button,
     Checkbox, Container,
-    FormControlLabel, FormGroup,
+    FormControlLabel,
     Grid,
     Link,
     TextField,
     Typography,
 } from '@mui/material'
-import UserService from '../services/UserService'
-import CountrySelect from '../components/CountrySelect'
-import AlertDialogSlide from '../components/AlertDialogSlide'
-import SettingService from '../services/SettingService'
-import LoadingSpinner from '../components/LoadingSpinner'
-import OtpFormDialog from '../components/OtpFormDialog'
-import OtpService from '../services/OtpService'
-import {Link as RouterLink} from "react-router-dom";
+import useRegisterFormHooks from "./RegisterForm.hooks.js";
 
-const schema = yup
-    .object({
-        company_name: yup.string().required().min(5),
-        country_code: yup.string(),
-        business_nature: yup.array().required().min(1),
-        position: yup.string().required().min(5),
-        name: yup.string().required().min(5),
-        email: yup.string().required().email().min(5),
-        password: yup.string().required().min(5),
-        password_confirmation: yup.string().required().oneOf([yup.ref('password'), null], 'Passwords must match'),
-        agree_terms: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
-    }).required()
 
 function RegisterForm() {
-
     const {
-        register,
         watch,
-        formState: {errors, isSubmitting},
+        register,
+        errors,
+        isLoading,
+        isSubmitting,
         handleSubmit,
-        getValues,
-        setError,
-        clearErrors
-    } = useForm({mode: 'onChange', resolver: yupResolver(schema)})
-    const [settings, setSettings] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [openDialog, setOpenDialog] = React.useState(false)
-    const [dialogContent, setDialogContent] = React.useState({})
-    const [displayOtpForm, setDisplayOtpForm] = React.useState(false)
-    const [otp, setOtp] = React.useState({})
+        onSubmit,
+        openDialog,
+        dialogContent,
+        displayOtpForm,
+        handleClickOpenTerms,
+        handleClickOpenPrivacy,
+        handleOtpButtonClick,
+        setOpenDialog,
+        otp,
+        setOtp,
+        setDisplayOtpForm
+    } = useRegisterFormHooks()
 
-    useEffect(() => {
-         const fetchOnPageLoadData = async () => {
-             SettingService.find(['terms_and_conditions', 'privacy_policy']).then((settingsResponse) => {
-                 setSettings(settingsResponse)
-                 setIsLoading(false)
-             })
-        }
-         // fetchOnPageLoadData()
-    }, [])
 
-    const handleOnSuccess = () => {
-        // setCookie('access_token', response.data.access_token)
-        // setCookie('refresh_token', response.data.refresh_token)
-        toast.success('User logged in successfully')
-    }
-    const handleOnError = (error) => {
-        toast.error(error.status.errors)
-    }
-
-    const handleClickOpenTerms = async () => {
-        const content = settings.find((item) => item.key === 'terms_and_conditions')
-        setDialogContent({'title': 'Terms and conditions', 'description': content.value})
-        setOpenDialog(true)
-    }
-
-    const handleClickOpenPrivacy = async () => {
-        const content = settings.find((item) => item.key === 'privacy_policy')
-        setDialogContent({'title': 'Privacy Policy', 'description': content.value})
-        setOpenDialog(true)
-    }
-
-    const handleOtpButtonClick = async () => {
-        clearErrors('email')
-        const email = getValues('email')
-        if (email.length === 0) {
-            setError('email', {type: 'manual', message: 'Please enter email to send OTP'})
-        } else {
-            const data = await OtpService.sendOtp(email)
-            if (!data.ref) {
-                return;
-            }
-            setOtp({...otp, ref: data.ref})
-            setDisplayOtpForm(true)
-        }
-    }
-
-    const onSubmit = async (data) => {
-        data['g-recaptcha-response'] = 'abcd'
-        data.country_code = country.code
-        data.otp = otp
-        data.otp.code && data.otp.ref ? sendRegisterRequest(data) : handleOtpButtonClick() && setDisplayOtpForm(true)
-    }
-    const sendRegisterRequest = async (data) => {
-        await UserService.register(data, handleOnSuccess, handleOnError)
-    }
     if (isLoading) {
         return (<LoadingSpinner/>)
     }
@@ -130,6 +58,8 @@ function RegisterForm() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate
                      sx={{mt: 1, width: '100%'}}>
+
+
                     <TextField
                         {...register('username')}
                         margin="normal"
@@ -186,6 +116,8 @@ function RegisterForm() {
                         type="password"
                         autoComplete="password"
                     />
+                    <Typography variant="overline"
+                                sx={{color: 'error.main'}}>{errors.password?.message}</Typography>
                     <TextField
                         {...register('password_confirmation')}
                         margin="normal"
@@ -232,15 +164,18 @@ function RegisterForm() {
                     >
                         {isSubmitting ? 'Submitting ...' : 'Sign In'}
                     </Button>
+                    <Typography variant="body2"
+                                sx={{mb: 2, color: 'error.main'}}>{errors.serverError?.message}</Typography>
+
                 </Box>
                 <Grid container sx={{mb: 2}}>
                     <Grid item xs>
-                        <Link component={RouterLink} to="/login" variant="body2">
+                        <Link component={RouterLink} to={"/login"} variant="body2">
                             {'Already have an account? Sign In'}
                         </Link>
                     </Grid>
                     <Grid item>
-                        <Link component={RouterLink} to="/forgot-password" variant="body2">
+                        <Link component={RouterLink} to={"/forgot-password"} variant="body2">
                             Forgot password?
                         </Link>
                     </Grid>
@@ -248,6 +183,7 @@ function RegisterForm() {
                 <AlertDialogSlide openDialog={openDialog} setOpenDialog={setOpenDialog}
                                   title={dialogContent.title}
                                   description={dialogContent.description}/>
+
                 <OtpFormDialog otp={otp} setOtp={setOtp} displayOtpForm={displayOtpForm}
                                setDisplayOtpForm={setDisplayOtpForm}/>
             </Box>

@@ -1,45 +1,36 @@
 import {createContext, useState, useEffect, useContext} from 'react';
+import {useCookies} from "react-cookie";
+import UserService from "../services/UserService.js";
+import {getDate} from "../utils/Helpers.js";
 
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [accessToken, setAccessToken] = useState(null);
-    const [refreshToken, setRefreshToken] = useState(null);
+    const [cookies, setCookie] = useCookies(['user', 'access_token', 'refresh_token'])
 
-    useEffect(() => {
-        //const storedUser = JSON.parse(localStorage.getItem(current_user));
-        const storedAccessToken = localStorage.getItem('access_token');
-        const storedRefreshToken = localStorage.getItem('refresh_token');
 
-        if (!!storedAccessToken && !!storedRefreshToken) {
-            // setCurrentUser(storedUser);
-            // setIsAuthenticated(true)
-            setAccessToken(storedAccessToken);
-            setRefreshToken(storedRefreshToken);
-        }
-    }, []);
+    const login = async (loginData) => {
+        const body = await UserService.login(loginData)
+        setCookie('access_token', body.data.access_token, {expires: getDate(7)})
+        setCookie('refresh_token', body.data.refresh_token, {expires: getDate(30)})
+        const user = await UserService.me()
+        setCookie('user', JSON.stringify(user), {expires: getDate(7)})
+    };
 
-    const login = (user, accessToken, refreshToken) => {
-        setCurrentUser(user);
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-
-        localStorage.setItem('current_user', JSON.stringify(user));
-        localStorage.setItem('access_token', accessToken);
-        localStorage.setItem('refresh_token', refreshToken);
+    const registerNewUser = async (data) => {
+        const body = await UserService.register(data)
+        setCookie('access_token', body.data.access_token, {expires: getDate(7)})
+        setCookie('refresh_token', body.data.refresh_token, {expires: getDate(30)})
+        const user = await UserService.me()
+        setCookie('user', JSON.stringify(user), {expires: getDate(7)})
     };
 
     const isAuthenticated = () => {
-        return (!!localStorage.getItem('access_token') && !!localStorage.getItem('refresh_token'))
+        return !!cookies.access_token && !!cookies.refresh_token
     };
 
     const logout = () => {
-        setCurrentUser(null);
-        setAccessToken(null);
-        setRefreshToken(null);
-
         localStorage.removeItem('current_user');
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
@@ -49,10 +40,8 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider
             value={{
                 isAuthenticated,
-                currentUser,
-                accessToken,
-                refreshToken,
                 login,
+                registerNewUser,
                 logout,
             }}
         >

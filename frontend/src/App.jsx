@@ -10,6 +10,8 @@ import router from "./routes/router";
 import {RouterProvider} from "react-router-dom";
 import {AuthProvider} from "./contexts/AuthContext";
 
+// Create a client
+
 function App() {
     return (
         <Layout>

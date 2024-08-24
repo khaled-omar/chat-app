@@ -1,9 +1,6 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import {useForm} from 'react-hook-form'
-import * as yup from 'yup'
-import {yupResolver} from '@hookform/resolvers/yup'
-import {toast} from 'material-react-toastify'
-import {Link as RouterLink, useNavigate} from 'react-router-dom'
+import {Link as RouterLink} from 'react-router-dom'
+import useLoginFormHooks from "./LoginForm.hooks.js";
 import {
     Avatar,
     Box,
@@ -15,42 +12,11 @@ import {
     TextField,
     Typography,
 } from '@mui/material'
-import UserService from '../services/UserService'
 
-const schema = yup
-    .object({
-        email: yup.string().required().email().min(5),
-        password: yup.string().required().min(5),
-    }).required()
 
 function LoginForm() {
-    const {
-        register,
-        setError,
-        formState: {errors, isSubmitting},
-        handleSubmit
-    } = useForm({resolver: yupResolver(schema)})
-    const navigate = useNavigate();
-    const handleOnSuccess = async (response) => {
-        localStorage.setItem('access_token', response.data.access_token)
-        localStorage.setItem('refresh_token', response.data.refresh_token)
-        const responseUser = await UserService.me()
-        localStorage.setItem('current_user', responseUser)
-        toast.success('User logged in successfully')
-        navigate('/')
-    }
-    const handleOnError = () => {
-        toast.error('Invalid email or password')
-        setError('email', {
-            type: 'manual',
-            message: 'Invalid email or password',
-        })
-    }
 
-    const onSubmit = async (data) => {
-        let loginData = {'email': data.email, 'password': data.password, 'g-recaptcha-response': 'abcd'}
-        await UserService.login(loginData, handleOnSuccess, handleOnError)
-    }
+    const {register, errors, isSubmitting, handleSubmit, onSubmit} = useLoginFormHooks()
 
     return (<Container maxWidth="sm">
         <Box
@@ -66,7 +32,7 @@ function LoginForm() {
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate
                  sx={{mt: 1, width: '100%'}}>
                 <TextField
-                    { ...register('email') }
+                    {...register('email')}
                     margin="normal"
                     fullWidth
                     label="Email Address"

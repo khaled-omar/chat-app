@@ -1,4 +1,5 @@
-import React from 'react'
+import useResetPasswordHooks from "./ResetPassword.hooks.js";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
     Avatar,
     Box,
@@ -7,42 +8,11 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {resetPasswordSchema} from "../validations/schema";
-import UserService from "../services/UserService";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {toast} from "material-react-toastify";
 
 
 function ResetPassword() {
-    const {
-        register,
-        formState: {errors, isSubmitting},
-        handleSubmit,
-    } = useForm({resolver: yupResolver(resetPasswordSchema)})
+    const {email, register, errors, isSubmitting, handleSubmit, onSubmit} = useResetPasswordHooks()
 
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-
-    const email = searchParams.get('email');
-    const token = searchParams.get('token');
-
-    if (!email || !token) {
-        window.location.href = '/login'
-    }
-
-    const onSubmit = async (data) => {
-        data['email'] = email;
-        data['token'] = token;
-        data['g-recaptcha-response'] = 'abcd';
-        await UserService.resetPassword(data)
-            .then(() => {
-                toast.success('Password Reset successfully')
-                navigate('/login')
-            })
-    }
     return (<Container maxWidth="sm">
         <Box
             sx={{
@@ -77,7 +47,7 @@ function ResetPassword() {
                     type="password"
                     autoComplete="password"
                 />
-                <Typography variant="overline"  sx={{color: 'error.main'}}>{errors.password?.message}</Typography>
+                <Typography variant="overline" sx={{color: 'error.main'}}>{errors.password?.message}</Typography>
 
                 <TextField
                     {...register('password_confirmation')}
@@ -89,7 +59,8 @@ function ResetPassword() {
                     type="password"
                     autoComplete="password_confirmation"
                 />
-                <Typography variant="overline"  sx={{color: 'error.main'}}>{errors.password_confirmation?.message}</Typography>
+                <Typography variant="overline"
+                            sx={{color: 'error.main'}}>{errors.password_confirmation?.message}</Typography>
 
                 <Button
                     disabled={isSubmitting}
