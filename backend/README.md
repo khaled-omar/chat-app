@@ -1,4 +1,4 @@
-# Halex API
+# Chat API
 
 ## Installation Steps
 We are using laravel sail read more about it from [Sail docs](https://laravel.com/docs/11.x/sail)
@@ -26,33 +26,3 @@ docker run --rm \
 1. Application Server:  `Exposed Port: 8082`
 2. Mysql Server: `Exposed Port: 3309`
 3. PhpMyAdmin: `Exposed Port: 3310`
-
-## Company Authorization
-In order to activate the company authorization module, you have to register all company routes under this route group on the `api.php`
-```php
-Route::middleware('authorize:company')->group(function () {
-            Route::apiResource('companies', CompanyController::class)->only(['index', 'show']);
-            Route::post('companies/{company}/complete', [RegistrationController::class, 'complete'])->name('companies.complete');
-            ... Others
-        });
-```
-* Each registered route must have a **route name**. 
-* The route name must be mapped to one of the company permissions. the map of route name and permissions is located on the `config/company-roles.php` under key name `route_permissions`.
-```php
-'route_permissions' => [
-        'companies.complete' => 'manage-company-profile'
-    ],
-```
-* Hereunder all available company permission:
-```json
-[
-        'manage-company-profile',
-        'manage-users',
-        'manage-categories',
-        'manage-certificates',
-        'manage-facilities',
-        'manage-products',
-        'manage-attachments',
-        'manage-inbox',
-    ]
-```
