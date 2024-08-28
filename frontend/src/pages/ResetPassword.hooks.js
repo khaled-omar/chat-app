@@ -1,8 +1,7 @@
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {useAuthContext} from "../contexts/AuthContext.jsx";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {forgetPasswordSchema, loginSchema, resetPasswordSchema} from "../validations/schema.js";
+import {resetPasswordSchema} from "../validations/schema.js";
 import UserService from "../services/UserService.js";
 import {toast} from "material-react-toastify";
 import {useEffect} from "react";

@@ -1,9 +1,9 @@
-import Profile from "../pages/Profile";
+import ChatPage from "../pages/ChatPage.jsx";
 import {ProtectedRoute} from "./ProtectedRoute";
 
 export const chatRoutes = [
     {
         path: "/",
-        element: <ProtectedRoute><Profile/></ProtectedRoute>,
+        element: <ProtectedRoute><ChatPage/></ProtectedRoute>,
     },
 ]

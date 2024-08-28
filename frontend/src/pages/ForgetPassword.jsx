@@ -14,7 +14,8 @@ import useForgetPasswordHooks from "./ForgetPassword.hooks.js";
 function ForgetPassword() {
     const {register, errors, isSubmitting, handleSubmit, onSubmit} = useForgetPasswordHooks()
 
-    return (<Container maxWidth="sm">
+    return (
+        <Container maxWidth="sm">
         <Box
             sx={{
                 mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center',

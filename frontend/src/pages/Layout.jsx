@@ -13,7 +13,7 @@ function Layout({children}) {
         <ThemeProvider theme={theme}>
             <CookiesProvider>
                 <QueryClientProvider client={queryClient}>
-                    <Container component="main">
+                    {/*<Container component="main" maxWidth='xl'>*/}
                         <CssBaseline/>
                         {children}
                         <ToastContainer
@@ -29,7 +29,7 @@ function Layout({children}) {
                             theme="colored"
                             transition={Slide}
                         />
-                    </Container>
+                    {/*</Container>*/}
                 </QueryClientProvider>
             </CookiesProvider>
         </ThemeProvider>
